@@ -25,7 +25,7 @@
     header('Location: index.php');
   }
 
-  // Did the User submit a form?
+  // Did the User submit a form? add to cart is name of submit form
   if (isset($_POST['add-to-cart'])) {
 
     // Find out the price of the product
@@ -41,16 +41,45 @@
 
     // Extract the data
     $result = $result->fetch_assoc();
+
+    $productFound = false;
+
+    // Loop over the cart an see if this product is added already
+    for ($i=0; $i < count($_SESSION['cart']); $i++) { 
+
+      // Get the ID of the product in the cart. $i is single product with all infomation
+      $cartItemID = $_SESSION['cart'][$i]['id'];
+
+      // Get the ID of the product being added to the cart
+      $addItemID = $_POST['product-id'];
+
+      // If the two IDs match
+      if ($cartItemID == $addItemID) {
+        
+        $_SESSION['cart'][$i]['quantity'] += $_POST['quantity'];
+        $productFound = true;
+
+      }
+      
+    }
+
+    // If the product was not found in the cart. or (!$productFound)
+    if ($productFound == false) {
+      
+    
+
+
     
     // Add the item to the cart
     $_SESSION['cart'][] = [
       'id' => $_POST['product-id'],
       'name' => $_POST['name'],
       'description' => $_POST['description'],
-      'price' => $result['price']
-      ];
+      'price' => $result['price'],
+      'quantity' => $_POST['quantity']
+    ];
 
-
+    }
 
   }
 
@@ -71,7 +100,7 @@
   // Run the query
   $result = $dbc->query($sql);
 
-  // Loop over the result
+  // Loop over the result. 
   while ($row = $result->fetch_assoc()) {
     
     // Include product template
