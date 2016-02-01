@@ -34,7 +34,7 @@
 	<td></td>
 	<td></td>
 	<td></td>
-	<td><strong><?= number_format($grandTotal, 2) ?></strong></td>
+	<td><strong>$<?= number_format($grandTotal, 2) ?></strong></td>
 </tr>
 
 

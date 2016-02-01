@@ -9,7 +9,9 @@ include 'templates/header.template.php';
 include 'templates/cart-contents.template.php';
 
 
+// Checkout form
 
+include 'templates/checkout-form.template.php';
 
 
 
